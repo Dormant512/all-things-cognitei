@@ -6,7 +6,10 @@
         - 200: valid json for item with id `id`
         - 400: invalid `id`
         - 404: items with id `id` not found
-- GET `items/category?type={}`:
+- GET `items/category`:
+    - takes json body with two fields:
+      - `include` of type array
+      - `exclude` of type array
     - response:
         - 200: array of jsons for items with given `type`
         - 400: invalid `type`
@@ -19,19 +22,10 @@
         - 201: item added, outputs created `id`
         - 400: invalid input json
         - 500: internal server error
-- POST `items/fix?id={}`:
-    - takes json body with correct params
-    - validates json
-    - updates item with id `id` if it exists
-    - response:
-        - 200: item updated, old and new json output
-        - 400: invalid input json
-        - 404: item with id `id` not found
 - DELETE `items/delete?id={}`:
     - response:
-        - 200: item deleted
+        - 200: item deleted or not found (considered ok)
         - 400: invalid `id`
-        - 404: items with id `id` not found
 
 ## schemas
 

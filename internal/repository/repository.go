@@ -12,10 +12,9 @@ import (
 type DataBaser interface {
 	RepPing(ctx *gin.Context) error
 	RepNewItem(*gin.Context, *util.MegaItem) (*primitive.ObjectID, error)
-	RepFixItem() error
 	RepGetById(*gin.Context, string) (*util.MegaItem, error)
 	RepGetInCategory() error
-	RepDeleteById() error
+	RepDeleteById(*gin.Context, string) error
 }
 
 type Repository struct {

@@ -53,10 +53,9 @@ func main() {
 
 	router := server.Group("/items")
 	router.GET("/ping", srv.SrvPing)
-	router.POST("/new", srv.SrvNewItem)
 	router.GET("/id", srv.SrvGetById)
-	router.POST("/fix", srv.SrvFixItem)
 	router.GET("/category", srv.SrvGetInCategory)
+	router.POST("/new", srv.SrvNewItem)
 	router.DELETE("/delete", srv.SrvDeleteById)
 	log.Fatal(server.Run(":" + cfg.AppPort))
 }

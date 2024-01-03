@@ -8,7 +8,6 @@ import (
 type BusinessLogic interface {
 	SrvPing(*gin.Context)
 	SrvNewItem(*gin.Context)
-	SrvFixItem(*gin.Context)
 	SrvGetById(*gin.Context)
 	SrvGetInCategory(*gin.Context)
 	SrvDeleteById(*gin.Context)
