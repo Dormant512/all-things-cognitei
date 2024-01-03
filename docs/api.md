@@ -27,6 +27,11 @@
         - 200: item updated, old and new json output
         - 400: invalid input json
         - 404: item with id `id` not found
+- DELETE `items/delete?id={}`:
+    - response:
+        - 200: item deleted
+        - 400: invalid `id`
+        - 404: items with id `id` not found
 
 ## schemas
 

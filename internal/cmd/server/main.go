@@ -15,8 +15,6 @@ import (
 	"time"
 )
 
-var Repo *repository.Repository
-
 func main() {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	server := gin.Default()
@@ -50,15 +48,15 @@ func main() {
 	}
 	fmt.Println("ping mongodb successful")
 
-	Repo = repository.NewRepository(db, cfg)
-	handlers.Repo = Repo
-	repository.Repo = Repo
+	repo := repository.NewRepository(db, cfg)
+	srv := handlers.NewService(repo)
 
 	router := server.Group("/items")
-	router.GET("/ping", handlers.Ping)
-	router.POST("/new", handlers.NewItem)
-	router.POST("/fix", handlers.Ping)     // TODO: implement
-	router.GET("/id", handlers.Ping)       // TODO: implement
-	router.GET("/category", handlers.Ping) // TODO: implement
+	router.GET("/ping", srv.SrvPing)
+	router.POST("/new", srv.SrvNewItem)
+	router.GET("/id", srv.SrvGetById)
+	router.POST("/fix", srv.SrvFixItem)
+	router.GET("/category", srv.SrvGetInCategory)
+	router.DELETE("/delete", srv.SrvDeleteById)
 	log.Fatal(server.Run(":" + cfg.AppPort))
 }

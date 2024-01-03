@@ -35,11 +35,28 @@ databash:
 	docker exec -it db-moc-things bash
 
 
+.PHONY: logs-app
+logs-app:
+	docker logs app-moc-things
+
+
 .PHONY: save-json
 save-json:
 	docker exec -i db-moc-things mongoexport --port $(DB_PORT) --db admin \
 	-u $(DB_USER) -p $(DB_PASSWORD) --collection $(MG_COLLECTION) --pretty \
 	--jsonArray | tee backup/$(MG_SAVEFILE).json backup/$(MG_SAVEFILE)_$$(date +%Y-%m-%d_%H-%M-%S).json > /dev/null
+
+
+.PHONY: from-json
+from-json:
+	docker cp backup/backup.json db-moc-things:retrieve_data.json && \
+	docker exec -i db-moc-things mongoimport --port $(DB_PORT) --db admin \
+    -u $(DB_USER) -p $(DB_PASSWORD) --collection $(MG_COLLECTION) --jsonArray retrieve_data.json
+
+
+.PHONY: delete-data
+delete-data:
+	docker volume rm build_mongo-data
 
 
 #.PHONY: save-potions

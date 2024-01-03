@@ -5,16 +5,17 @@ import (
 	"github.com/Dormant512/all-things-cognitei/internal/util"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-func (r *Repository) RepNewItem(ctx *gin.Context, item *util.MegaItem) (interface{}, error) {
+func (r *Repository) RepNewItem(ctx *gin.Context, item *util.MegaItem) (*primitive.ObjectID, error) {
 	// try to find doc with the name
 	itemName := item.ItemName
-	var findRes bson.M
-	Repo.Mu.RLock()
+	var findRes util.MegaItem
+	r.Mu.RLock()
 	err := r.Col.FindOne(ctx, bson.M{"itemName": itemName}).Decode(&findRes)
-	Repo.Mu.RUnlock()
+	r.Mu.RUnlock()
 	if err == nil {
 		// document found
 		return nil, util.DocWithNameExistsError{ItemName: *itemName}
@@ -24,10 +25,12 @@ func (r *Repository) RepNewItem(ctx *gin.Context, item *util.MegaItem) (interfac
 	}
 
 	// try to add new item to database
-	// TODO: remove placeholder
-	insRes, err := r.Col.InsertOne(ctx, bson.M{"itemName": itemName, "placeholder": true})
+	r.Mu.Lock()
+	insRes, err := r.Col.InsertOne(ctx, item)
+	r.Mu.Unlock()
 	if err != nil {
 		return nil, err
 	}
-	return insRes.InsertedID, nil
+	var oid = insRes.InsertedID.(primitive.ObjectID)
+	return &oid, nil
 }

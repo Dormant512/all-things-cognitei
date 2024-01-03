@@ -10,18 +10,26 @@ func (e DocWithNameExistsError) Error() string {
 	return fmt.Sprintf("document with itemName %s already exists", e.ItemName)
 }
 
-type InvalidMegaItemTypeError struct {
+type DocWithWithIdNotFoundError struct {
+	Id string
+}
+
+func (e DocWithWithIdNotFoundError) Error() string {
+	return fmt.Sprintf("document with id %s not found", e.Id)
+}
+
+type MegaItemTypeDoesNotExistError struct {
 	InvalidType string
 }
 
-func (e InvalidMegaItemTypeError) Error() string {
+func (e MegaItemTypeDoesNotExistError) Error() string {
 	return fmt.Sprintf("MegaItem object contains unknown itemType %s", e.InvalidType)
 }
 
-type InvalidMegaItemError struct {
-	InvalidType string
+type MegaItemIsNotOfSaidTypeError struct {
+	SaidType string
 }
 
-func (e InvalidMegaItemError) Error() string {
-	return "MegaItem object does not fit item criteria"
+func (e MegaItemIsNotOfSaidTypeError) Error() string {
+	return fmt.Sprintf("MegaItem object does not fit type %s criteria", e.SaidType)
 }

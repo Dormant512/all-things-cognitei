@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func NewItem(ctx *gin.Context) {
+func (s *Service) SrvNewItem(ctx *gin.Context) {
 	var megaItem util.MegaItem
 	err := ctx.BindJSON(&megaItem)
 	if err != nil {
@@ -17,7 +17,6 @@ func NewItem(ctx *gin.Context) {
 		return
 	}
 
-	// TODO: validate itemType of MegaItem, send only useful info to repo
 	err = megaItem.FillUtil()
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest,
@@ -25,7 +24,7 @@ func NewItem(ctx *gin.Context) {
 		return
 	}
 
-	insId, err := Repo.RepNewItem(ctx, &megaItem)
+	insId, err := s.Rep.RepNewItem(ctx, &megaItem)
 	if err != nil {
 		if errors.Is(err, util.DocWithNameExistsError{ItemName: *megaItem.ItemName}) {
 			ctx.JSON(http.StatusBadRequest,

@@ -4,17 +4,18 @@ import (
 	"github.com/Dormant512/all-things-cognitei/internal/config"
 	"github.com/Dormant512/all-things-cognitei/internal/util"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"sync"
 )
 
-var Repo *Repository
-
 type DataBaser interface {
-	RepNewItem(*gin.Context, *util.MegaItem) (interface{}, error)
+	RepPing(ctx *gin.Context) error
+	RepNewItem(*gin.Context, *util.MegaItem) (*primitive.ObjectID, error)
 	RepFixItem() error
-	RepGetById() error
+	RepGetById(*gin.Context, string) (*util.MegaItem, error)
 	RepGetInCategory() error
+	RepDeleteById() error
 }
 
 type Repository struct {

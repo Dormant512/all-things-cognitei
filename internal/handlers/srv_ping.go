@@ -2,15 +2,14 @@ package handlers
 
 import (
 	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"net/http"
 )
 
-func Ping(ctx *gin.Context) {
-	err := Repo.DB.Ping(ctx, readpref.Primary())
+func (s *Service) SrvPing(ctx *gin.Context) {
+	err := s.Rep.RepPing(ctx)
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError,
-			gin.H{"message": "mongoDB broke"})
+			gin.H{"message": "mongoDB ping failed"})
 		return
 	}
 	ctx.JSON(http.StatusOK,
