@@ -181,3 +181,27 @@ func (m *MegaItem) FillUtil() error {
 	m.UtilCreatedAt = time.Now().Format(time.DateTime)
 	return nil
 }
+
+type CategoriesToFetch struct {
+	Include []string `json:"include,omitempty"`
+	Exclude []string `json:"exclude,omitempty"`
+}
+
+func (c *CategoriesToFetch) MakeValid() error {
+	inSet, err := SliceToCatSet(c.Include)
+	if err != nil {
+		return err
+	}
+	exSet, err := SliceToCatSet(c.Exclude)
+	if err != nil {
+		return err
+	}
+	for k := range inSet {
+		if exSet[k] {
+			inSet[k] = false
+		}
+	}
+	c.Include = MapToSlice(inSet)
+	c.Exclude = MapToSlice(exSet)
+	return nil
+}

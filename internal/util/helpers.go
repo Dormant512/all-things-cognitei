@@ -9,3 +9,14 @@ func MapToSlice(m map[string]bool) []string {
 	}
 	return ans
 }
+
+func SliceToCatSet(s []string) (map[string]bool, error) {
+	ans := make(map[string]bool)
+	for _, item := range s {
+		if !ItemTypes[item] {
+			return nil, MegaItemTypeDoesNotExistError{InvalidType: item}
+		}
+		ans[item] = true
+	}
+	return ans, nil
+}

@@ -13,7 +13,7 @@ type DataBaser interface {
 	RepPing(ctx *gin.Context) error
 	RepNewItem(*gin.Context, *util.MegaItem) (*primitive.ObjectID, error)
 	RepGetById(*gin.Context, string) (*util.MegaItem, error)
-	RepGetInCategory() error
+	RepGetInCategory(*gin.Context, *util.CategoriesToFetch) ([]util.MegaItem, error)
 	RepDeleteById(*gin.Context, string) error
 }
 
