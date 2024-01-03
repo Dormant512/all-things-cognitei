@@ -81,8 +81,6 @@ type MegaItem struct {
 	ArtifactEffects []string `json:"artifactEffects,omitempty" bson:"artifactEffects,omitempty"`
 }
 
-// TODO: check if BindJSON binds empty array to nil or []string{} - IMPORTANT!
-
 func (m *MegaItem) checkValidityOnType(itemType string) error {
 	var cond bool
 	switch itemType {
