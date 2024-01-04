@@ -1,10 +1,10 @@
 # Ping
-GET http://localhost:3001/items/ping
+GET http://localhost/items/ping
 
 ###
 
 # Create item
-POST http://localhost:3001/items/new
+POST http://localhost/items/new
 Authorization: Basic dm1 pass1
 Content-Type: application/json
 
@@ -29,18 +29,18 @@ Content-Type: application/json
 ###
 
 # Get item by id
-GET http://localhost:3001/items/id?id=6596922d52a028623f509773
+GET http://localhost/items/id?id=6596922d52a028623f509773
 
 ###
 
 # Delete item by id
-DELETE http://localhost:3001/items/delete?id=6596922d52a028623f509773
+DELETE http://localhost/items/delete?id=6596922d52a028623f509773
 Authorization: Basic dm1 pass1
 
 ###
 
 # Get all items with included and without excluded categories
-GET http://localhost:3001/items/category
+GET http://localhost/items/category
 Content-Type: application/json
 
 {

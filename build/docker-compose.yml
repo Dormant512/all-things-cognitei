@@ -6,7 +6,7 @@ services:
       context: ..
       dockerfile: build/Dockerfile
     ports:
-      - "3001:3001"
+      - "80:${APP_PORT}"
     restart: unless-stopped
     depends_on:
       - db
