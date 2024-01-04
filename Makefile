@@ -49,7 +49,7 @@ save-json:
 
 .PHONY: from-json
 from-json:
-	docker cp backup/backup.json db-moc-things:retrieve_data.json && \
+	docker cp backup/$(MG_SAVEFILE).json db-moc-things:retrieve_data.json && \
 	docker exec -i db-moc-things mongoimport --port $(DB_PORT) --db admin \
     -u $(DB_USER) -p $(DB_PASSWORD) --collection $(MG_COLLECTION) --jsonArray retrieve_data.json
 

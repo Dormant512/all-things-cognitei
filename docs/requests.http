@@ -1,0 +1,49 @@
+# Ping
+GET http://localhost:3001/items/ping
+
+###
+
+# Create item
+POST http://localhost:3001/items/new
+Content-Type: application/json
+
+{
+  "itemName": "artifact potion food 3",
+  "itemBulkiness": 0.5,
+  "itemDescription": "BLA.",
+  "itemTypes": [
+    "artifact",
+    "potion",
+    "food"
+  ],
+  "potionEffect": "anti evil",
+  "potionDuration": "12 years",
+  "artifactEffects": [
+    "protects from evil",
+    "makes horny"
+  ],
+  "foodTypes": ["a", "b"]
+}
+
+###
+
+# Get item by id
+GET http://localhost:3001/items/id?id=6595db423d5a9fcf5052eb8e
+
+###
+
+# Delete item by id
+DELETE http://localhost:3001/items/delete?id=6595db233d5a9fcf5052eb8d
+
+###
+
+# Get all items with included and without excluded categories
+GET http://localhost:3001/items/category
+Content-Type: application/json
+
+{
+  "include": ["potion", "artifact"],
+  "exclude": ["fighting"]
+}
+
+###

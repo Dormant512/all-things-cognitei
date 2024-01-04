@@ -2,4 +2,4 @@
 Microservice for creating, storing and viewing items &amp; loot for Masters of Cognitei.
 - [API specification](./docs/api.md)
 - [Deployment tutorial](./docs/deploy.md)
-- [Basic usage](./docs/usage.md)
+- [Example usage](./docs/requests.http)
