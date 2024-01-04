@@ -18,6 +18,7 @@ DB_TYPE=mongodb
 MG_COLLECTION=placeholder_collection
 MG_SAVEFILE=placeholder_backup_filename
 APP_PORT=3001
+DM_USER_JSON="{\"dm1\": \"pass1\", \"dm2\": \"pass2\"}"
 ```
 
 ## Useful Makefile commands

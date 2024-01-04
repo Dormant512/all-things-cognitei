@@ -15,6 +15,7 @@ type Config struct {
 	MGCollection string `env:"MG_COLLECTION" envDefault:"myCol"`
 	MGSaveFile   string `env:"MG_COLLECTION" envDefault:"backup"`
 	AppPort      string `env:"APP_PORT" envDefault:"3001"`
+	DmUserJson   string `env:"DM_USER_JSON" envDefault:""`
 }
 
 func New() (*Config, error) {

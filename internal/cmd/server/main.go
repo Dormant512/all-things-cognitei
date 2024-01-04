@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/Dormant512/all-things-cognitei/internal/config"
 	"github.com/Dormant512/all-things-cognitei/internal/handlers"
@@ -55,7 +56,15 @@ func main() {
 	router.GET("/ping", srv.SrvPing)
 	router.GET("/id", srv.SrvGetById)
 	router.GET("/category", srv.SrvGetInCategory)
-	router.POST("/new", srv.SrvNewItem)
-	router.DELETE("/delete", srv.SrvDeleteById)
+
+	var dmUsers gin.Accounts
+	err = json.Unmarshal([]byte(cfg.DmUserJson), &dmUsers)
+	if err != nil {
+		log.Fatalf("DM account json parse failed: %v", err)
+	}
+
+	authorized := server.Group("/items", gin.BasicAuth(dmUsers))
+	authorized.POST("/new", srv.SrvNewItem)
+	authorized.DELETE("/delete", srv.SrvDeleteById)
 	log.Fatal(server.Run(":" + cfg.AppPort))
 }
